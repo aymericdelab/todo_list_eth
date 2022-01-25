@@ -16,21 +16,6 @@ app.get('/create-task/:task', function (req, res) {
   provider.sendTransaction(signedtransaction).then((transaction) => {
   console.log(transaction)
   });
-  //res.send('task ' + req.params.task)
-})
-
-app.get('/hello', function (req, res) {
-  console.log('aymeric')
-  //not possible to fetch
-  res.send({data: 'hello there ...'})
-})
-
-app.get('/hello2', function (req, res) {
-  res.send({data: 'hello there ...'})
-})
-
-app.get('', function (req, res) {
-  res.send('task ' + req.params.task)
 })
 
 //ABI defines the methods and structures used to interact with the binary contract (bytecode)
