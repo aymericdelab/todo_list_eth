@@ -13,6 +13,38 @@
   }
 }
 
+.headerBlock {
+  display: inline-block;
+}
+
+.header {
+  font-size: 32px;
+  float: left;
+}
+
+.connexionButton {
+  float: right;
+  margin-left: 500px;
+  margin-top: 60px;
+}
+
+.newTask {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.toDoListContainer {
+  border: solid;
+  width: 33%;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 33%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
