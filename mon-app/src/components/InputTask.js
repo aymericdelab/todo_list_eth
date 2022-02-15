@@ -1,8 +1,12 @@
 import React from 'react';
 import '../App.css';
+//import { preSignTransaction, sendToWebServer } from '../InteractSmartContract'
+const InteractSmartContract = require('../InteractSmartContract')
 
 
-export default function InputTask() {
+export default function InputTask(props) {
+    const [useNewTaskInput, setNewTaskInput] = props.state;
+
     return(
         <div>
             <h4>
@@ -10,13 +14,15 @@ export default function InputTask() {
             </h4>
 
             <div>
-                <input>
+                <input type="text" onChange={(e) => {setNewTaskInput(e.target.value)}}>
                 
                 </input>
             </div>
 
             <div>
-                <button style={{marginTop: "20px"}}>
+                <button style={{marginTop: "20px"}} onClick={() => {
+                    InteractSmartContract.preSignTransaction(useNewTaskInput, true)
+                                        .then((e) => InteractSmartContract.sendToWebServer(e))}}>
                     Send to Ethereum
                 </button>
             </div>

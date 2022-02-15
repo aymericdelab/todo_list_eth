@@ -7,10 +7,32 @@ import { checkResultErrors } from '@ethersproject/abi';
 import * as React from 'react'
 // components
 import InputTask from './components/InputTask'
-import ToDoList, {Button1, ListTask} from './components/ToDoList'
+import { ListTask } from './components/ToDoList'
 import ConnexionButton from './components/Connexion'
 
+var InteractSmartContract = require('./InteractSmartContract')
+
 function App() {
+
+  // user secret key
+  const [usePrivateKey, setPrivateKey] = React.useState("");
+
+  // input of the user for new task
+  const [useNewTaskInput, setNewTaskInput] = React.useState("");
+
+  // input of the user to mark tasks as done
+  const [useCheckedTasks, setCheckedTasks] = React.useState(new Set([]));
+
+  // list of todos retrieved from ethereum
+  const [useTodoList, setTodoList] = React.useState([]);
+
+  // only activate first time the app is rendered
+  // add event listener
+  React.useEffect(() => {InteractSmartContract.retrieveToDoList().then((list) => setTodoList(list))},
+  []);
+  
+  // retrieve the list of tasks from ethereum
+
   return (
     <div className="App">
 
@@ -27,11 +49,12 @@ function App() {
       </div>
 
       <div id="newTask" className="newTask">
-        <InputTask></InputTask>
+        <InputTask state={[useNewTaskInput, setNewTaskInput]} ></InputTask>
       </div>
 
       <div id="listTasks">
-        <ListTask></ListTask>
+        <ListTask checkedState={[useCheckedTasks, setCheckedTasks]} 
+                  todolistState={[useTodoList, setTodoList]}></ListTask>
       </div>
 
     </div>
