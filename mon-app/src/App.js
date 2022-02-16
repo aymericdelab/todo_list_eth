@@ -1,9 +1,5 @@
 import logo from './logo.svg';
-//import './App.css';
-import styles from './App.css'
-import { Wallet } from "ethers";
-import { checkResultErrors } from '@ethersproject/abi';
-//import { InfuraProvider } from 'ethers/provider'
+import './App.css';
 import * as React from 'react'
 // components
 import InputTask from './components/InputTask'
@@ -15,7 +11,7 @@ var InteractSmartContract = require('./InteractSmartContract')
 function App() {
 
   // user secret key
-  const [usePrivateKey, setPrivateKey] = React.useState("");
+  const [usePrivateKey, setPrivateKey] = React.useState(null);
 
   // input of the user for new task
   const [useNewTaskInput, setNewTaskInput] = React.useState("");
@@ -28,8 +24,8 @@ function App() {
 
   // only activate first time the app is rendered
   // add event listener
-  React.useEffect(() => {InteractSmartContract.retrieveToDoList().then((list) => setTodoList(list))},
-  []);
+  React.useEffect(() => {usePrivateKey? InteractSmartContract.retrieveToDoList(usePrivateKey).then((list) => setTodoList(list)): setTodoList([""])},
+  [usePrivateKey]);
   
   // retrieve the list of tasks from ethereum
 
@@ -43,18 +39,19 @@ function App() {
         </div>
 
         <div id="connexionButton" className="connexionButton">
-          <ConnexionButton></ConnexionButton>
+          <ConnexionButton keys={[usePrivateKey, setPrivateKey]}></ConnexionButton>
         </div>
 
       </div>
 
       <div id="newTask" className="newTask">
-        <InputTask state={[useNewTaskInput, setNewTaskInput]} ></InputTask>
+        <InputTask state={[useNewTaskInput, setNewTaskInput]} keys={[usePrivateKey, setPrivateKey]} ></InputTask>
       </div>
 
       <div id="listTasks">
         <ListTask checkedState={[useCheckedTasks, setCheckedTasks]} 
-                  todolistState={[useTodoList, setTodoList]}></ListTask>
+                  todolistState={[useTodoList, setTodoList]}
+                  keys={[usePrivateKey, setPrivateKey]}></ListTask>
       </div>
 
     </div>

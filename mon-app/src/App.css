@@ -14,17 +14,17 @@
 }
 
 .headerBlock {
-  display: inline-block;
+  display: flex; 
 }
 
 .header {
   font-size: 32px;
-  float: left;
+  width: 50%;
 }
 
 .connexionButton {
-  float: right;
-  margin-left: 500px;
+  width: 33%;
+  margin-left: 250px;
   margin-top: 60px;
 }
 
@@ -43,6 +43,13 @@
   margin-left: 33%;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.connexionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 10px;
 }
 
 .App-header {

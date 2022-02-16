@@ -6,6 +6,7 @@ const InteractSmartContract = require('../InteractSmartContract')
 
 export default function InputTask(props) {
     const [useNewTaskInput, setNewTaskInput] = props.state;
+    const [usePrivateKey, setPrivateKey] = props.keys;
 
     return(
         <div>
@@ -21,8 +22,8 @@ export default function InputTask(props) {
 
             <div>
                 <button style={{marginTop: "20px"}} onClick={() => {
-                    InteractSmartContract.preSignTransaction(useNewTaskInput, true)
-                                        .then((e) => InteractSmartContract.sendToWebServer(e))}}>
+                    usePrivateKey? InteractSmartContract.preSignTransaction(useNewTaskInput, true, usePrivateKey)
+                                        .then((e) => InteractSmartContract.sendToWebServer(e)):console.log('No Private Key Specified')}}>
                     Send to Ethereum
                 </button>
             </div>

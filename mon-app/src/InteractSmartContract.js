@@ -2,24 +2,29 @@ var ethers = require('ethers')
 var http = require('http')
 var React = require('react')
 
-const listenEvents = () => {
-    const PRIVATE_KEY = '39c7cb141dd94ee632a1b15ca7a82a62805330b80aeb341cf2d4316cf08a9b2f';
+
+const retrieveAddressFromPK = (pk) => {
+    var wallet = new ethers.Wallet(pk);
+    //console.log(wallet.address);
+    return wallet.address;
+}
+
+const listenEvents = (pk) => {
     const CONTRACT = '0x44c1061E5B1Ab4cf202Ec821Afda061E6957656e';
     const provider = new ethers.providers.InfuraProvider("rinkeby")
     const abi = [{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"owner","type":"address"},{"indexed":false,"internalType":"string","name":"task","type":"string"},{"indexed":false,"internalType":"bool","name":"done","type":"bool"}],"name":"TaskLog","type":"event"},{"constant":false,"inputs":[{"internalType":"string","name":"task","type":"string"}],"name":"addTask","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"task","type":"string"}],"name":"completeTask","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getToDoList","outputs":[{"components":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"done","type":"bool"},{"internalType":"string","name":"task","type":"string"}],"internalType":"struct ContractToDoList.taskRecord[]","name":"","type":"tuple[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"toDoArray","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"done","type":"bool"},{"internalType":"string","name":"task","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}]
-    var wallet = new ethers.Wallet(PRIVATE_KEY)
+    var wallet = new ethers.Wallet(pk)
     var walletSigner = wallet.connect(provider)
     var contract = new ethers.Contract(CONTRACT, abi, walletSigner);
     //contract.on("TaskLog", (event) => {console.log('aymeric'); console.log(useEventCounter)});
     return contract;
 }
 
-const retrieveToDoList = () => {
-    const PRIVATE_KEY = '39c7cb141dd94ee632a1b15ca7a82a62805330b80aeb341cf2d4316cf08a9b2f';
+const retrieveToDoList = (pk) => {
     const CONTRACT = '0x44c1061E5B1Ab4cf202Ec821Afda061E6957656e';
     const provider = new ethers.providers.InfuraProvider("rinkeby")
     const abi = [{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"owner","type":"address"},{"indexed":false,"internalType":"string","name":"task","type":"string"},{"indexed":false,"internalType":"bool","name":"done","type":"bool"}],"name":"TaskLog","type":"event"},{"constant":false,"inputs":[{"internalType":"string","name":"task","type":"string"}],"name":"addTask","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"task","type":"string"}],"name":"completeTask","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getToDoList","outputs":[{"components":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"done","type":"bool"},{"internalType":"string","name":"task","type":"string"}],"internalType":"struct ContractToDoList.taskRecord[]","name":"","type":"tuple[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"toDoArray","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"done","type":"bool"},{"internalType":"string","name":"task","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}]
-    var wallet = new ethers.Wallet(PRIVATE_KEY)
+    var wallet = new ethers.Wallet(pk)
     var walletSigner = wallet.connect(provider)
     var contract = new ethers.Contract(CONTRACT, abi, walletSigner);
     const promiseList = contract.getToDoList();
@@ -37,12 +42,12 @@ const parseToDoList = (list) => {
     return ownerList
 }
 
-const preSignTransaction = (task, is_new_task=true) => {
-    const PRIVATE_KEY = '39c7cb141dd94ee632a1b15ca7a82a62805330b80aeb341cf2d4316cf08a9b2f';
+const preSignTransaction = (task, is_new_task=true, pk) => {
+    //const PRIVATE_KEY = '39c7cb141dd94ee632a1b15ca7a82a62805330b80aeb341cf2d4316cf08a9b2f';
     const CONTRACT = '0x44c1061E5B1Ab4cf202Ec821Afda061E6957656e';
     const provider = new ethers.providers.InfuraProvider("rinkeby")
     const abi = [{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"owner","type":"address"},{"indexed":false,"internalType":"string","name":"task","type":"string"},{"indexed":false,"internalType":"bool","name":"done","type":"bool"}],"name":"TaskLog","type":"event"},{"constant":false,"inputs":[{"internalType":"string","name":"task","type":"string"}],"name":"addTask","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"task","type":"string"}],"name":"completeTask","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getToDoList","outputs":[{"components":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"done","type":"bool"},{"internalType":"string","name":"task","type":"string"}],"internalType":"struct ContractToDoList.taskRecord[]","name":"","type":"tuple[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"toDoArray","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"bool","name":"done","type":"bool"},{"internalType":"string","name":"task","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}]
-    var wallet = new ethers.Wallet(PRIVATE_KEY)
+    var wallet = new ethers.Wallet(pk)
     var walletSigner = wallet.connect(provider)
     var contract = new ethers.Contract(CONTRACT, abi, walletSigner);
 
@@ -99,6 +104,7 @@ exports.preSignTransaction = preSignTransaction;
 exports.sendToWebServer = sendToWebServer;
 exports.retrieveToDoList = retrieveToDoList;
 exports.listenEvents = listenEvents;
+exports.retrieveAddressFromPK = retrieveAddressFromPK;
 
 
-listenEvents();
+//listenEvents();
