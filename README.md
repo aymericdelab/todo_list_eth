@@ -1,16 +1,12 @@
-# Basic Sample Hardhat Project
+## Todo List on Ethereum
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+# Launch
 
-Try running some of the following tasks:
+The React app can be started by going into /my-app directory and launching:
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
-# todolist_ethereum
+	npm start
+
+When the app is launched, the webserver can be started using node:
+	node webserver.js
+
+
