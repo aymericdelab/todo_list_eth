@@ -7,6 +7,7 @@ The React app can be started by going into /my-app directory and launching:
 	npm start
 
 When the app is launched, the webserver can be started using node:
+
 	node webserver.js
 
 # Contract
